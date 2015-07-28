@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
 /*
  * Copyright 2015 Zoraide Braga
  *
@@ -15,9 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
--->
-<beans xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
-       http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
-       bean-discovery-mode="all">
-</beans>
+package br.com.zoraidebraga.intranet.br.com.zoraidebraga.intranet.models;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class TestModel
+{
+    @Id
+    private Long id;
+    private String name;
+
+    public Long getId()
+    {
+        return id;
+    }
+
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+}

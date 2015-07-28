@@ -15,19 +15,30 @@
  */
 package br.com.zoraidebraga.intranet.application;
 
+import br.com.zoraidebraga.intranet.br.com.zoraidebraga.intranet.models.TestModel;
+import br.com.zoraidebraga.intranet.repositories.TestRepository;
+
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 @Path("test")
 public class TestService
 {
+
+    @Inject
+    private TestRepository testRepository;
+
     @GET
     @Produces({ APPLICATION_JSON })
-    public TestModel test()
+    public List<TestModel> listModels()
     {
-        return new TestModel("Hello World");
+        return testRepository.findAll();
     }
 }

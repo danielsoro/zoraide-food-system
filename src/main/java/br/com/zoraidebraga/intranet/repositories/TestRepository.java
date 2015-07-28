@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
 /*
  * Copyright 2015 Zoraide Braga
  *
@@ -15,9 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
--->
-<beans xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
-       http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
-       bean-discovery-mode="all">
-</beans>
+package br.com.zoraidebraga.intranet.repositories;
+
+import br.com.zoraidebraga.intranet.br.com.zoraidebraga.intranet.models.TestModel;
+import org.apache.deltaspike.data.api.EntityRepository;
+import org.apache.deltaspike.data.api.Repository;
+
+@Repository
+public interface TestRepository extends EntityRepository<TestModel, Long>
+{
+}

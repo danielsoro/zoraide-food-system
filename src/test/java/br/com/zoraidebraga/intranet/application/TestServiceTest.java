@@ -15,6 +15,9 @@
  */
 package br.com.zoraidebraga.intranet.application;
 
+import br.com.zoraidebraga.intranet.br.com.zoraidebraga.intranet.models.TestModel;
+import br.com.zoraidebraga.intranet.produces.EntityManagerProducer;
+import br.com.zoraidebraga.intranet.repositories.TestRepository;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -25,12 +28,11 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import javax.ws.rs.core.Response;
 import java.io.File;
 import java.net.URL;
 
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 @RunWith(Arquillian.class)
 public class TestServiceTest
@@ -41,13 +43,18 @@ public class TestServiceTest
 
         final File[] dependencies = Maven.resolver().loadPomFromFile("pom.xml").resolve(
                 "org.apache.deltaspike.core:deltaspike-core-api",
-                "org.apache.deltaspike.core:deltaspike-core-impl")
+                "org.apache.deltaspike.core:deltaspike-core-impl",
+                "org.apache.deltaspike.modules:deltaspike-jpa-module-api",
+                "org.apache.deltaspike.modules:deltaspike-jpa-module-impl",
+                "org.apache.deltaspike.modules:deltaspike-data-module-api",
+                "org.apache.deltaspike.modules:deltaspike-data-module-impl")
                 .withTransitivity()
                 .asFile();
 
         return ShrinkWrap.create(WebArchive.class)
-                .addClasses(ApplicationConfiguration.class, TestService.class)
-                .addAsLibraries(dependencies);
+                .addClasses(ApplicationConfiguration.class, TestService.class, TestModel.class, TestRepository.class, EntityManagerProducer.class)
+                .addAsLibraries(dependencies)
+                .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml");
     }
 
     @ArquillianResource
@@ -61,13 +68,9 @@ public class TestServiceTest
         final WebClient webClient = WebClient.create(webappUrl.toURI());
 
         // when
-        final TestModel testModel = webClient.path("intranet/test/")
-                .accept(APPLICATION_JSON)
-                .get(TestModel.class);
+        final Response response = webClient.path("intranet/test/").getResponse();
 
         // then
-        assertNotNull(testModel);
-        assertEquals("Hello World", testModel.getMsg());
-    }
 
+    }
 }

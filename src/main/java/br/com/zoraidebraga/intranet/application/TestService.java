@@ -34,7 +34,7 @@ public class TestService
     private TestRepository testRepository;
 
     @GET
-    @Produces({APPLICATION_JSON})
+    @Produces({ APPLICATION_JSON })
     public List<TestModel> listModels()
     {
         return testRepository.findAll();

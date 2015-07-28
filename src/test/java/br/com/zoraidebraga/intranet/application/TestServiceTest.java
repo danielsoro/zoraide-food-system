@@ -32,8 +32,6 @@ import javax.ws.rs.core.Response;
 import java.io.File;
 import java.net.URL;
 
-import static org.junit.Assert.assertEquals;
-
 @RunWith(Arquillian.class)
 public class TestServiceTest
 {
